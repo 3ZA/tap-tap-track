@@ -2,9 +2,26 @@
 {{range $key, $value := .ActivityHistory}}
     <div>
 	    <h2> {{$key}} </h2>
+	    <table>
+		<thead>
+		  <tr>
+		    <th>Mon</th>
+		    <th>Tue</th>
+		    <th>Wed</th>
+		    <th>Thur</th>
+		    <th>Fri</th>
+		    <th>Sat</th>
+		    <th>Sun</th>
+		  </tr>
+		</thead>
+	<tbody>
+	<tr>
 	{{range $value}}
-	<p> {{.}} </p>
+	<td> {{.}}</td>
 	 {{end}}
+	 </tr>
+	</tbody>
+	    </table>
     </div>
 {{end}}
 {{end}}

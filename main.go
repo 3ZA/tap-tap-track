@@ -10,12 +10,16 @@ func main() {
 	http.ListenAndServe(":8585", nil)
 }
 
+const sparkles = "✨"
+const miss = "✗"
+
 func activity(w http.ResponseWriter, r *http.Request) {
 	param := html.ActivityParams{
 		Title: "Activity",
 		ActivityHistory: map[string][]string{
-			"cycle": []string{"mon", "tue", "wed"},
-			"run":   []string{"wed", "sun"},
+			"cycle": []string{sparkles, sparkles, miss, miss, miss, sparkles, sparkles},
+
+			"run": []string{"wed", "sun"},
 		},
 	}
 	html.Activity(w, param)
