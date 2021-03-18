@@ -1,0 +1,16 @@
+#main {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    color: blue;
+}
+
+input[type=checkbox]:checked + label {
+  color:red;
+  text-decoration: line-through;
+}
+
+.label {
+	font-size:105px;
+}

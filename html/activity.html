@@ -1,6 +1,7 @@
 {{define "content"}}
+<main>
 {{range $key, $value := .ActivityHistory}}
-    <div>
+    <div id="main">
 	    <h2> {{$key}} </h2>
 	    <table class="styled-table">
 		<thead>
@@ -24,4 +25,10 @@
 	    </table>
     </div>
 {{end}}
+</main>
 {{end}}
+
+{{define "css"}}
+<link rel="stylesheet" href="/static/css/activity.css">
+{{end}}
+

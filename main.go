@@ -1,14 +1,18 @@
 package main
 
 import (
-	"github.com/3ZA/tap-tap-track/html"
+	"fmt"
 	"net/http"
+	"time"
+
+	"github.com/3ZA/tap-tap-track/html"
 )
 
 func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/activity", activity)
+	http.HandleFunc("/habits", habits)
 	http.ListenAndServe(":8585", nil)
 }
 
@@ -25,4 +29,15 @@ func activity(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	html.Activity(w, param)
+}
+
+func habits(w http.ResponseWriter, r *http.Request) {
+	now := time.Now()
+	date := fmt.Sprintf("%02d %s %d", now.Day(), now.Month().String()[:3], now.Year())
+	param := html.HabitsParams{
+		Title:  "Habits",
+		Date:   date,
+		Habits: []string{"cycle", "run"},
+	}
+	html.Habits(w, param)
 }

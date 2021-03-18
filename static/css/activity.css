@@ -31,3 +31,7 @@
     border-bottom: 2px solid #009879;
 }
 
+#main {
+  width: 600px;
+  margin: 0 auto; 
+}
