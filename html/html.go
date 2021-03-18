@@ -19,6 +19,11 @@ type ActivityParams struct {
 	ActivityHistory map[string][]string
 }
 
+type Habit struct {
+	Name string
+	Done bool
+}
+
 type HabitsParams struct {
 	Title  string
 	Date   string

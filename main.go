@@ -32,12 +32,26 @@ func activity(w http.ResponseWriter, r *http.Request) {
 }
 
 func habits(w http.ResponseWriter, r *http.Request) {
-	now := time.Now()
-	date := fmt.Sprintf("%02d %s %d", now.Day(), now.Month().String()[:3], now.Year())
-	param := html.HabitsParams{
-		Title:  "Habits",
-		Date:   date,
-		Habits: []string{"cycle", "run"},
+	fmt.Println(r)
+	switch r.Method {
+	case http.MethodGet:
+		now := time.Now()
+		date := fmt.Sprintf("%02d %s %d", now.Day(), now.Month().String()[:3], now.Year())
+		param := html.HabitsParams{
+			Title:  "Habits",
+			Date:   date,
+			Habits: []string{"cycle", "run"},
+		}
+		html.Habits(w, param)
+	case http.MethodPost:
+		err := r.ParseForm()
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(r.Form)
+		habit := r.FormValue("habit")
+		done := r.Form.Get("done")
+		fmt.Printf("%s %s", string(habit), string(done))
 	}
-	html.Habits(w, param)
+
 }
