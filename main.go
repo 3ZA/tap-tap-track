@@ -10,9 +10,12 @@ import (
 
 func main() {
 	fs := http.FileServer(http.Dir("static"))
+	habitHandler := &HabitHandler{
+		db: NewInMemoryStore(),
+	}
+	http.Handle("/habits", habitHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/activity", activity)
-	http.HandleFunc("/habits", habits)
 	http.ListenAndServe(":8585", nil)
 }
 
@@ -31,8 +34,16 @@ func activity(w http.ResponseWriter, r *http.Request) {
 	html.Activity(w, param)
 }
 
-func habits(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r)
+type Store interface {
+	GetHabitsByDate(date string) []*html.Habit
+	Update(date string, habit *html.Habit)
+}
+
+type HabitHandler struct {
+	db Store
+}
+
+func (*HabitHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		now := time.Now()
@@ -48,10 +59,8 @@ func habits(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println(r.Form)
 		habit := r.FormValue("habit")
 		done := r.Form.Get("done")
 		fmt.Printf("%s %s", string(habit), string(done))
 	}
-
 }

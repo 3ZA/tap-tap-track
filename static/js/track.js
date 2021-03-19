@@ -24,17 +24,19 @@ window.onload = function() {
 function postDoneTask(habit, done) {
 	var xhr = new XMLHttpRequest();
 
+
 	// Setup our listener to process compeleted requests
 	xhr.onreadystatechange = function () {
 
 		// Only run if the request is complete
-		if (xhr.readyState !== 4) return;
+		if (xhr.readyState === XMLHttpRequest.DONE) return;
 
 		// Process our return data
 		if (xhr.status >= 200 && xhr.status < 300) return;
 	};
 
 	xhr.open('POST', 'http://localhost:8585/habits', true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhr.send('habit='+habit+'&'+'done='+done);
 }
 
