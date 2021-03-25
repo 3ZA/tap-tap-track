@@ -1,11 +1,15 @@
 {{define "content"}}
 <main>
 	<div id="main">
-	<h1>{{.Date}}</h1>
-		{{range .Habits}}
+	<h1 id="date">{{.Date}}</h1>
+		{{range $habitName, $done := .Habits}}
 		<div>
-			<input type="checkbox" value="{{.}}">
-			<label> {{.}} </label>
+			{{if $done }}
+			<input type="checkbox" value="{{$habitName}}" checked>
+			{{else}}
+			<input type="checkbox" value="{{$habitName}}">
+			{{end}}
+			<label> {{$habitName}} </label>
 			<br>
 		</div>
 		{{end}}
