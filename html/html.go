@@ -27,7 +27,7 @@ type Habit struct {
 type HabitsParams struct {
 	Title  string
 	Date   string
-	Habits []string
+	Habits map[string]bool
 }
 
 func Habits(w io.Writer, p HabitsParams) error {
